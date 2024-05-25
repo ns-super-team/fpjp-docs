@@ -1,0 +1,384 @@
+openapi: 3.0.0
+servers:
+  - description: Hospital Equipment Management Endpoint
+    url: /api
+info:
+  description: Equipment and requests management system for hospital
+  version: '1.0.0'
+  title: Hospital Equipment Management API
+  contact:
+    email: example@mail.com
+  license:
+    name: CC BY 4.0
+    url: 'https://creativecommons.org/licenses/by/4.0/'
+tags:
+  - name: Equipment and requests management
+    description: Management of equipment and requests in hospital departments
+paths:
+  '/departments/':
+    get:
+      tags:
+        - Equipment and requests management
+      summary: Provides list of all departments
+      operationId: getDepartments
+      description: Returns a list of all departments in the hospital
+      responses:
+        '200':
+          description: List of all departments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+              examples:
+                response:
+                  $ref: '#/components/examples/DepartmentsExample'
+  '/departments/{departmentId}/equipment':
+    get:
+      tags:
+        - Equipment and requests management
+      summary: Provides list of all equipment in a department
+      operationId: getDepartmentEquipment
+      description: Returns a list of all equipment in the specified department
+      parameters:
+        - in: path
+          name: departmentId
+          description: Pass the ID of the particular department
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of equipment in the department
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Equipment'
+              examples:
+                response:
+                  $ref: '#/components/examples/EquipmentExample'
+  '/departments/{departmentId}/requests':
+    get:
+      tags:
+        - Equipment and requests management
+      summary: Provides list of all requests in a department
+      operationId: getDepartmentRequests
+      description: Returns a list of all requests in the specified department
+      parameters:
+        - in: path
+          name: departmentId
+          description: Pass the ID of the particular department
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of requests in the department
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Request'
+              examples:
+                response:
+                  $ref: '#/components/examples/RequestsExample'
+  '/rooms/{roomId}/equipment':
+    post:
+      tags:
+        - Equipment and requests management
+      summary: Adds new equipment to a room
+      operationId: addRoomEquipment
+      description: Use this method to add new equipment to a specified room
+      parameters:
+        - in: path
+          name: roomId
+          description: Pass the ID of the particular room
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+            examples:
+              request-sample:
+                $ref: '#/components/examples/EquipmentExample'
+        description: New equipment to add
+        required: true
+      responses:
+        '200':
+          description: Newly added equipment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+              examples:
+                updated-response:
+                  $ref: '#/components/examples/EquipmentExample'
+  '/rooms/{roomId}/requests':
+    post:
+      tags:
+        - Equipment and requests management
+      summary: Adds new request to a room
+      operationId: addRoomRequest
+      description: Use this method to add a new request to a specified room
+      parameters:
+        - in: path
+          name: roomId
+          description: Pass the ID of the particular room
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+            examples:
+              request-sample:
+                $ref: '#/components/examples/RequestExample'
+        description: New request to add
+        required: true
+      responses:
+        '200':
+          description: Newly added request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+              examples:
+                updated-response:
+                  $ref: '#/components/examples/RequestExample'
+  '/equipment/{equipmentId}':
+    put:
+      tags:
+        - Equipment and requests management
+      summary: Updates specific equipment
+      operationId: updateEquipment
+      description: Use this method to update details of specific equipment
+      parameters:
+        - in: path
+          name: equipmentId
+          description: Pass the ID of the particular equipment
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment'
+            examples:
+              request:
+                $ref: '#/components/examples/EquipmentExample'
+        description: Equipment details to update
+        required: true
+      responses:
+        '200':
+          description: Updated equipment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+              examples:
+                response:
+                  $ref: '#/components/examples/EquipmentExample'
+    delete:
+      tags:
+        - Equipment and requests management
+      summary: Deletes specific equipment
+      operationId: deleteEquipment
+      description: Use this method to delete specific equipment from the system
+      parameters:
+        - in: path
+          name: equipmentId
+          description: Pass the ID of the particular equipment
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Equipment deleted
+  '/requests/{requestId}':
+    put:
+      tags:
+        - Equipment and requests management
+      summary: Updates specific request
+      operationId: updateRequest
+      description: Use this method to update details of a specific request
+      parameters:
+        - in: path
+          name: requestId
+          description: Pass the ID of the particular request
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+            examples:
+              request:
+                $ref: '#/components/examples/RequestExample'
+        description: Request details to update
+        required: true
+      responses:
+        '200':
+          description: Updated request details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Request'
+              examples:
+                response:
+                  $ref: '#/components/examples/RequestExample'
+    delete:
+      tags:
+        - Equipment and requests management
+      summary: Deletes specific request
+      operationId: deleteRequest
+      description: Use this method to delete specific request from the system
+      parameters:
+        - in: path
+          name: requestId
+          description: Pass the ID of the particular request
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Request deleted
+components:
+  schemas:
+    Department:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          example: dept1
+          description: Unique identifier of the department
+        name:
+          type: string
+          example: Radiology
+          description: Name of the department
+    Room:
+      type: object
+      required: [id, department_id, name]
+      properties:
+        id:
+          type: string
+          example: room1
+          description: Unique identifier of the room
+        department_id:
+          type: string
+          example: dept1
+          description: Identifier of the department the room belongs to
+        name:
+          type: string
+          example: X-Ray Room 1
+          description: Name of the room
+    Equipment:
+      type: object
+      required: [id, room_id, type, name, count]
+      properties:
+        id:
+          type: string
+          example: eq1
+          description: Unique identifier of the equipment
+        room_id:
+          type: string
+          example: room1
+          description: Identifier of the room the equipment belongs to
+        type:
+          type: string
+          example: diagnostic
+          description: Type of the equipment
+        name:
+          type: string
+          example: X-Ray Machine
+          description: Name of the equipment
+        count:
+          type: integer
+          example: 1
+          description: Number of equipment items available
+    Request:
+      type: object
+      required: [id, room_id, type, name, description]
+      properties:
+        id:
+          type: string
+          example: req1
+          description: Unique identifier of the request
+        room_id:
+          type: string
+          example: room1
+          description: Identifier of the room the request is associated with
+        type:
+          type: string
+          enum: [missing-equipment, repair]
+          example: missing-equipment
+          description: Type of the request
+        name:
+          type: string
+          example: MRI Machine
+          description: Name of the equipment requested or to be repaired
+        count:
+          type: integer
+          nullable: true
+          example: 2
+          description: Number of items requested (only applicable for missing-equipment requests)
+        description:
+          type: string
+          example: "Request for 2 new MRI machines."
+          description: Detailed description of the request
+  examples:
+    DepartmentsExample:
+      summary: List of departments
+      description: Example list containing 2 departments
+      value:
+        - id: dept1
+          name: Radiology
+        - id: dept2
+          name: Cardiology
+    EquipmentExample:
+      summary: Equipment in a room
+      description: Example list containing equipment items
+      value:
+        - id: eq1
+          room_id: room1
+          type: diagnostic
+          name: X-Ray Machine
+          count: 1
+    RequestsExample:
+      summary: List of requests
+      description: Example list containing 2 requests
+      value:
+        - id: req1
+          room_id: room1
+          type: missing-equipment
+          name: MRI Machine
+          count: 2
+          description: "Request for 2 new MRI machines."
+        - id: req2
+          room_id: room2
+          type: repair
+          name: CT Scanner
+          count: null
+          description: "Repair request for the CT Scanner."
+    RequestExample:
+      summary: Repair request
+      description: Example of a repair request
+      value:
+        id: req2
+        room_id: room2
+        type: repair
+        name: CT Scanner
+        count: null
+        description: "Repair request for the CT Scanner."
