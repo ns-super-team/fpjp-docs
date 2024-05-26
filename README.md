@@ -10,7 +10,7 @@ Github repozitáre pre jednotlivé časti aplikácie:
 
 Na ukladanie vytvorených kontajnerov sme použili GitHub Packages ([register kontajnerov](https://github.com/orgs/ns-super-team/packages)).
 
-Naša aplikácia sa na spoločnom klastri volá [Evidencia vybavenia nemocnice - fpjp](https://wac-24.westeurope.cloudapp.azure.com/ui/fpjp-department/). UI aplikácie je deploynuté ako **fpjp-ambulance-ufe** a webapi ako **fpjp-ambulance-webapi**. 
+Naša aplikácia sa na spoločnom klastri volá [Evidencia vybavenia nemocnice - fpjp](https://wac-24.westeurope.cloudapp.azure.com/ui/fpjp-department/). UI aplikácie je deploynuté ako **fpjp-ambulance-ufe-deployment** a webapi ako **fpjp-ambulance-webapi**. 
 
 Frontend je taktiež deploynutý na [Azure](https://fpjp-ambulance.azurewebsites.net), ale nezobrazuje žiaden obsah keďže nie je pripojený k backendu.
 
