@@ -27,7 +27,7 @@ Na implementáciu backendu sme využili jazyk Go s frameworkom Gin a ako databá
 - `Departments` obsahuje záznamy pre jednotlivé oddelenia nemocnice.
 - `Rooms` predstavuje jednotlivé izby, ktoré sú viazané na oddelenia.
 - `Equipment` uchováva záznamy o vybavení. Každé vybavenie má vlastný typ, meno, počet a prislúchajú danej izbe.
-- `Requests` predstavujú jednotlivé požiadavky týkajúce sa vybavenia (poškodenie alebo nedostatok určitého vybavenia). Požiadavky taktiež prislúchajú určitej izbe a každá požiadavka má meno, typ a môže mať taktiež počet a nejaký opis.
+- `Requests` predstavujú jednotlivé požiadavky týkajúce sa vybavenia (poškodenie alebo nedostatok určitého vybavenia). Požiadavky rovnako prislúchajú určitej izbe a každá požiadavka má meno, typ a môže mať taktiež počet a nejaký opis.
 
 Aj keď jednou z výhod mongodb je aj to, že kolekcie môžu obsahovať aj vnorené objekty, my sme sa ich rozhodli radšej rozdeliť. V našom prípade by mohli byť `Equipment` a `Requests` rovno vo vnútri `Rooms`, no v tomto prípade by bolo obtiažnejšie ich upravovanie, obzvlášť zmenenie izby, ktorej prislúchajú.
 
@@ -45,8 +45,10 @@ Naše api pozostáva z 9 endpointov ([dokumentácia api endpointov](https://ns-s
 ### Frontend
 ![návrh ui](imgs/navrh_aplikacie.png)
 
-Na vytvorenie frontendu sme použili framework Stenciljs. Naša aplikácia sa skladá z 3 hlavných obrazoviek. 
+Na vytvorenie frontendu našej aplikácie sme použili framework Stenciljs. Naša aplikácia sa skladá z 3 hlavných obrazoviek. 
 
-Úvodnou obrazovkou je "Prehľad oddelení" (komponent `fpjp-department-overview`), z ktorej sa dá prejsť na podstránky pre vybavenia a požiadavky jednotlivých oddelení. 
+Úvodnou obrazovkou je "Prehľad oddelení" (komponent `fpjp-department-overview`), z ktorej sa dá prejsť na podstránky pre vybavenie a požiadavky jednotlivých oddelení. 
 
-Podstránka pre vybavenie (komponent `fpjp-department`) obsahuje prehľad vybavenia pre jednotlivé miestnosti v danom oddelení spolu s ich počtom a typom.
+Podstránka pre vybavenie (komponent `fpjp-department`) obsahuje prehľad vybavenia pre jednotlivé miestnosti v danom oddelení spolu s ich počtom a typom. Zobrazené informácie o vybavení sa dajú editovať a taktiež je na tejto stránke možné aj vytvoriť nový záznam, poprípade sa dá rovno vytvoriť nová požiadavka pre chýbajúce vybavenie. Na editovanie ako aj na vytváranie nového vybavenia slúži komponent (`fpjp-equipment-editor`).
+
+Podstránka pre požiadavky (komponent `fpjp-department-requests`) je podobná tej pre vybavenie a obsahuje prehľad požiadaviek pre dané oddelenie. Rôzne typy požiadaviek sú farebné oddelené, kde červené predstavujú chybné vybavenie a žlté chýbajúce vybavenie. Rovnako je možné vytvoriť nový záznam alebo sa dajú jednotlivé záznamy taktiež editovať, načo slúži komponent `fpjp-request-editor`. Poprípade sa dajú požiadavky označiť za "Vybavené", kedy sa vymažú.
